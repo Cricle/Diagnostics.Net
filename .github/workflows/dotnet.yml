@@ -1,0 +1,29 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          6.0.x
+          8.0.x
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.3.1
+    - name: Build
+      run: |
+        & msbuild /p:Configuration=Release -t:restore -m
+        & msbuild /p:Configuration=Release -m
+    - name: Test
+      # run: cmd /c "dotnet test --no-build -c Release"
+      run: dotnet vstest ((ls -Recurse *.Test.dll | % FullName) -Match "\\bin\\Release\\")
