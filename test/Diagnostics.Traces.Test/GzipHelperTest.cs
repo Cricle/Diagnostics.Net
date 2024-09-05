@@ -12,9 +12,9 @@ namespace Diagnostics.Traces.Test
             var str = string.Empty;
             var res = GzipHelper.Compress(str);
 
-            Assert.AreEqual(res.Count, 15);
-            Assert.AreEqual(res.Result.Length, 16);
-            Assert.AreEqual(res.Span.Length, 15);
+            Assert.AreEqual(res.Count, 0);
+            Assert.AreEqual(res.Result.Length, 0);
+            Assert.AreEqual(res.Span.Length, 0);
         }
 
         [TestMethod]

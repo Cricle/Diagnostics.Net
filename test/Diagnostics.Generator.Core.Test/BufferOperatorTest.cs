@@ -80,7 +80,7 @@ namespace Diagnostics.Generator.Core.Test
             var @operator = new BufferOperator<object>(handler);
             @operator.Dispose();
 
-            if (!SpinWait.SpinUntil(() => @operator.Task.IsCompletedSuccessfully, TimeSpan.FromSeconds(10)))
+            if (!SpinWait.SpinUntil(() => @operator.Task.IsCompleted&&!@operator.Task.IsFaulted, TimeSpan.FromSeconds(10)))
             {
                 Assert.Fail("The operator task stop timeout 10 seconds");
             }

@@ -16,6 +16,10 @@ namespace Diagnostics.Traces
         }
         public static GzipCompressResult Compress(byte[] result, int offset, int count, CompressionLevel level = CompressionLevel.Fastest)
         {
+            if (result.Length == 0)
+            {
+                return new GzipCompressResult(new ValueBufferMemoryStream(), Stream.Null, false, Array.Empty<byte>(), 0);
+            }
             var stream = new ValueBufferMemoryStream();
             try
             {
@@ -32,6 +36,7 @@ namespace Diagnostics.Traces
                     copyBuffer = ArrayPool<byte>.Shared.Rent(size);
                     buffer.ToArray(copyBuffer);
                 }
+                stream.Position = 0;
                 return new GzipCompressResult(stream, gzip, shouldReturn, copyBuffer, size);
             }
             finally

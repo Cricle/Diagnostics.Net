@@ -1,6 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Diagnostics.CodeAnalysis;
-using System.Formats.Asn1;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Diagnostics.Generator.Core.Test
 {
@@ -129,7 +127,7 @@ namespace Diagnostics.Generator.Core.Test
 
             WaitAllComplated(@operator);
             Assert.AreEqual(@operator.UnComplatedCount, 0);
-            
+
             Assert.IsNotNull(handler.Datas);
             Assert.AreEqual(handler.Datas.Length, 100);
             Assert.IsTrue(handler.Datas.SequenceEqual(Enumerable.Range(0, 100)));
@@ -177,8 +175,11 @@ namespace Diagnostics.Generator.Core.Test
 
             WaitAllComplated(@operator);
             Assert.AreEqual(@operator.UnComplatedCount, 0);
-
-            Assert.AreEqual(handler.Datas.Count,2);
+            if (!SpinWait.SpinUntil(() => handler.Datas.Count == 2, TimeSpan.FromSeconds(10)))
+            {
+                Assert.Fail($"Wait handler.Datas.Count == 2 timeout 10 seconds");
+            }
+            Assert.AreEqual(handler.Datas.Count, 2);
             Assert.AreEqual(handler.Datas[0].Length, 50);
             Assert.AreEqual(handler.Datas[1].Length, 5);
             Assert.IsTrue(handler.Datas[0].SequenceEqual(Enumerable.Range(0, 50)));

@@ -22,7 +22,7 @@ namespace Diagnostics.Traces.Test.Serialization
 
             protected override void WriteCore(ReadOnlySpan<byte> buffer)
             {
-                Writted.AddRange(buffer);
+                Writted.AddRange(buffer.ToArray());
             }
 
             protected override void OnDisposed()

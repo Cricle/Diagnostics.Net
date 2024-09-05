@@ -1,4 +1,6 @@
 ﻿using Diagnostics.Traces.Serialization;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Diagnostics.Traces.Test.Serialization
 {
@@ -36,7 +38,7 @@ namespace Diagnostics.Traces.Test.Serialization
         public void GivenBuffer_ReadMustOutputGiven()
         {
             var buffer = new byte[sizeof(int)];
-            BitConverter.TryWriteBytes(buffer, 102444);
+            Unsafe.Write(Unsafe.AsPointer(ref MemoryMarshal.GetReference(buffer.AsSpan())), 102444);
             fixed (byte* ptr = buffer)
             {
                 var ser = new ConstMiniReadSerializer(ptr, buffer.Length);

@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Runtime.InteropServices;
-
+﻿
 namespace Diagnostics.Traces.Test
 {
     [TestClass]
