@@ -1,6 +1,6 @@
 ﻿namespace Diagnostics.Traces
 {
-    public abstract class StringStoreBase : IBytesStore
+    public abstract class BytesStoreBase : IBytesStore
     {
         public abstract string Name { get; }
 

@@ -25,7 +25,7 @@ namespace Diagnostics.Traces
                 await stream.WriteAsync(data.Buffers, 0, data.Count, token).ConfigureAwait(false);
             }
         }
-        public static void WriteString(this Stream stream, string value, Encoding encoding, CancellationToken token = default)
+        public static void WriteString(this Stream stream, string value, Encoding encoding)
         {
             if (encoding is null)
             {

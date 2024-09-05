@@ -4,7 +4,7 @@ using ValueBuffer;
 
 namespace Diagnostics.Traces.Parquet
 {
-    public class ParquetStringStore : StringStoreBase, IDisposable
+    public class ParquetStringStore : BytesStoreBase, IDisposable
     {
         public ParquetStringStore(IUndefinedDatabaseSelector<ParquetDatabaseCreatedResult> databaseSelector, string name)
         {

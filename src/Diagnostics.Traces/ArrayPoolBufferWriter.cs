@@ -193,7 +193,7 @@ namespace Diagnostics.Traces
             }
 
             // Same representation used in Span<T>
-            return $"CommunityToolkit.HighPerformance.Buffers.ArrayPoolBufferWriter<{typeof(T)}>[{this.index}]";
+            return $"ArrayPoolBufferWriter<{typeof(T)}>[{this.index}]";
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

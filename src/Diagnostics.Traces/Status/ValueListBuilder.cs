@@ -10,9 +10,13 @@ namespace Diagnostics.Traces.Status
     /// <typeparam name="T"></typeparam>
     internal struct ValueListBuilder<T> : IReadOnlyBufferList<T>
     {
-        private T[] _span;
-        private T[]? _arrayFromPool;
+        internal T[] _span;
         private int _pos;
+
+        public ValueListBuilder()
+        {
+            _span = Array.Empty<T>();
+        }
 
         public int Length
         {
@@ -120,12 +124,8 @@ namespace Diagnostics.Traces.Status
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
-            T[]? toReturn = _arrayFromPool;
-            if (toReturn != null)
-            {
-                _arrayFromPool = null;
-                ArrayPool<T>.Shared.Return(toReturn);
-            }
+            _span = Array.Empty<T>();
+            ArrayPool<T>.Shared.Return(_span);
         }
 
         // Note that consuming implementations depend on the list only growing if it's absolutely
@@ -133,7 +133,7 @@ namespace Diagnostics.Traces.Status
         // it must not grow. The list is used in a number of places where the reference is checked
         // and it's expected to match the initial reference provided to the constructor if that
         // span was sufficiently large.
-        private void Grow(int additionalCapacityRequired = 1)
+        internal void Grow(int additionalCapacityRequired = 1)
         {
             const int ArrayMaxLength = 0x7FFFFFC7; // same as Array.MaxLength
 
@@ -155,8 +155,8 @@ namespace Diagnostics.Traces.Status
             T[] array = ArrayPool<T>.Shared.Rent(nextCapacity);
             _span.AsSpan().CopyTo(array);
 
-            T[]? toReturn = _arrayFromPool;
-            _span = _arrayFromPool = array;
+            T[]? toReturn = _span;
+            _span = array;
             if (toReturn != null)
             {
                 ArrayPool<T>.Shared.Return(toReturn);

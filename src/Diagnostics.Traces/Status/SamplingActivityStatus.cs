@@ -5,101 +5,43 @@ namespace Diagnostics.Traces.Status
 {
     public class SamplingActivityStatus : ActivityStatus, IDisposable
     {
-        private ConcurrentDictionary<Activity, Activity> currentBuffer = null!;
-        private TimerHandler? loopSwitchHandler;
-        private bool willSwitch;
+        private readonly ConcurrentDictionary<Activity, Activity> buffer;
 
-        public TimeSpan SwitchTime { get; }
+        public int BufferSize => buffer.Count;
 
-        public int CurrentBufferSize => currentBuffer.Count;
+        public IEnumerable<Activity> Buffer => buffer.Keys;
 
-        public SamplingActivityStatus(ActivitySource source, TimeSpan switchTime)
+        public SamplingActivityStatus(ActivitySource source)
             : base(source)
         {
-            SwitchTime = switchTime;
-            Init();
+            buffer = new ConcurrentDictionary<Activity, Activity>();
         }
 
-        public SamplingActivityStatus(string sourceName, TimeSpan switchTime)
+        public SamplingActivityStatus(string sourceName)
             : base(sourceName)
         {
-            SwitchTime = switchTime;
-            Init();
+            buffer = new ConcurrentDictionary<Activity, Activity>();
         }
 
-        public SamplingActivityStatus(Func<ActivitySource, bool> sourceFun, TimeSpan switchTime)
+        public SamplingActivityStatus(Func<ActivitySource, bool> sourceFun)
             : base(sourceFun)
         {
-            SwitchTime = switchTime;
-            Init();
+            buffer = new ConcurrentDictionary<Activity, Activity>();
         }
 
-        private void Init()
+        public bool Contains(Activity activity)
         {
-            currentBuffer = new ConcurrentDictionary<Activity, Activity>();
-            if (SwitchTime.Ticks != 0)
-            {
-                loopSwitchHandler = new TimerHandler(SwitchTime, Switch);
-                willSwitch = true;
-            }
-        }
-
-        public IList<Activity> UnsafeGetList()
-        {
-            if (willSwitch)
-            {
-                return Volatile.Read(ref currentBuffer).Values.ToList();
-            }
-            return currentBuffer.Values.ToList();
-
-        }
-
-        public void CopyBuffer(ICollection<Activity> activities)
-        {
-            var map = willSwitch ? Volatile.Read(ref currentBuffer) : currentBuffer;//TODO:
-            foreach (var item in currentBuffer)
-            {
-                activities.Add(item.Value);
-            }
-        }
-
-        public List<Activity> CopyBuffer()
-        {
-            return Volatile.Read(ref currentBuffer).Values.ToList();
+            return buffer.ContainsKey(activity);
         }
 
         protected override void OnActivityStarted(Activity activity)
         {
-            if (willSwitch)
-            {
-                Volatile.Read(ref currentBuffer)[activity] = activity;
-            }
-            else
-            {
-                currentBuffer[activity] = activity;
-            }
+            buffer[activity] = activity;
         }
 
         protected override void OnActivityStoped(Activity activity)
         {
-            if (willSwitch)
-            {
-                Volatile.Read(ref currentBuffer).TryRemove(activity, out _);
-            }
-            else
-            {
-                currentBuffer.TryRemove(activity, out _);
-            }
-        }
-
-        private void Switch()
-        {
-            Volatile.Write(ref currentBuffer, new ConcurrentDictionary<Activity, Activity>());
-        }
-
-        protected override void OnDisposed()
-        {
-            loopSwitchHandler?.Dispose();
+            buffer.TryRemove(activity, out _);
         }
     }
 }

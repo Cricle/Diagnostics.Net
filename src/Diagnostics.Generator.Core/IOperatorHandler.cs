@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Diagnostics.Generator.Core
 {
-    public interface IOpetatorHandler<T>
+    public interface IOperatorHandler<T>
     {
         Task HandleAsync(T input, CancellationToken token);
     }

@@ -6,7 +6,7 @@
         private const int DefaultCacheSize = 1000;
         private const int MinimumCacheSize = 2;
 
-        protected readonly Dictionary<TKey, Node<TKey, TValue>> data;
+        protected internal readonly Dictionary<TKey, Node<TKey, TValue>> data;
         private Node<TKey, TValue>? head;
         private Node<TKey, TValue>? tail;
         private readonly int cacheSize;
@@ -53,9 +53,10 @@
             {
                 throw new ArgumentNullException(nameof(key));
             }
-            if (data == null)
+
+            if (dataFun == null)
             {
-                throw new ArgumentNullException(nameof(data));
+                throw new ArgumentNullException(nameof(dataFun));
             }
 
             lock (locker)
@@ -80,6 +81,7 @@
             {
                 throw new ArgumentNullException(nameof(key));
             }
+
             if (dataFun == null)
             {
                 throw new ArgumentNullException(nameof(dataFun));
@@ -104,10 +106,6 @@
             {
                 throw new ArgumentNullException(nameof(key));
             }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
 
             lock (locker)
             {
@@ -126,6 +124,11 @@
 
         public bool TryPeek(TKey key, out TValue? data)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
             lock (locker)
             {
                 if (this.data.TryGetValue(key, out var node))
@@ -157,6 +160,11 @@
 
         public bool TryGetValue(TKey key, out TValue? data)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
             lock (locker)
             {
                 if (this.data.TryGetValue(key, out var node))
@@ -173,18 +181,25 @@
             }
         }
 
-        public bool Remove(TKey key)
+        public bool TryRemove(TKey key, out TValue? value)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
             lock (locker)
             {
                 if (data.TryGetValue(key, out var node))
                 {
                     RemoveNodeFromList(node);
                     DisposeValue(node.Value);
+                    value = node.Value;
                     return true;
                 }
                 else
                 {
+                    value = default;
                     return false;
                 }
             }
@@ -197,6 +212,11 @@
 
         public bool ContainsKey(TKey key)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
             lock (locker)
             {
                 return data.ContainsKey(key);
@@ -205,17 +225,31 @@
 
         public void Add(TKey key, TValue value)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
             lock (locker)
             {
                 if (!data.ContainsKey(key))
                 {
                     AddItem(key, value);
                 }
+                else
+                {
+                    data[key].Value = value;
+                }
             }
         }
 
         public void Add(KeyValuePair<TKey, TValue> item)
         {
+            if (item.Key == null)
+            {
+                throw new ArgumentNullException(nameof(item.Key));
+            }
+
             lock (locker)
             {
                 Add(item.Key, item.Value);
@@ -301,6 +335,7 @@
         {
             Clear();
             OnDisposed();
+            GC.SuppressFinalize(this);
         }
 
         protected virtual void OnDisposed()

@@ -1,17 +1,15 @@
-﻿namespace Diagnostics.Traces
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+
+namespace Diagnostics.Traces
 {
+    [ExcludeFromCodeCoverage]
     public sealed class Node<TKey, TValue>
     {
         internal Node(TKey key, TValue data)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Debug.Assert(key != null);
+            Debug.Assert(data != null);
 
             Value = data;
             Key = key;

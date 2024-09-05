@@ -5,7 +5,7 @@ namespace Diagnostics.Traces
 {
     public abstract class BytesStoreManagerBase : IBytesStoreManager
     {
-        private readonly ConcurrentDictionary<string, IBytesStore> bytesStores;
+        internal readonly ConcurrentDictionary<string, IBytesStore> bytesStores;
 
         protected BytesStoreManagerBase()
         {
@@ -33,7 +33,7 @@ namespace Diagnostics.Traces
 
         public bool Remove(string name)
         {
-            if (bytesStores.TryGetValue(name,out var val))
+            if (bytesStores.TryRemove(name,out var val))
             {
                 val.Dispose();
                 return true;

@@ -2,7 +2,7 @@
 
 namespace Diagnostics.Traces
 {
-    public readonly struct BytesStoreValue
+    public readonly record struct BytesStoreValue
     {
         public BytesStoreValue(string str)
             : this(DateTime.Now, str)
@@ -29,6 +29,16 @@ namespace Diagnostics.Traces
         }
         public BytesStoreValue(DateTime time, byte[] value, int offset, int length)
         {
+            if (value is null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            if (offset + length > value.Length)
+            {
+                throw new ArgumentOutOfRangeException($"The offset is {offset}, length {length} is out of range {value.Length}");
+            }
+
             Time = time;
             Value = value;
             Offset = offset;
@@ -45,7 +55,7 @@ namespace Diagnostics.Traces
 
         public override string ToString()
         {
-            return $"{{{Time.ToString("o")}}} {Encoding.UTF8.GetString(Value, Offset, Length)}}}";
+            return $"{{{Time:o}}} {Encoding.UTF8.GetString(Value, Offset, Length)}}}";
         }
 
         public static implicit operator BytesStoreValue(string str)

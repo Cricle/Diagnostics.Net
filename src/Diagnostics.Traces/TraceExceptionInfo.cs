@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Diagnostics.Traces
+﻿namespace Diagnostics.Traces
 {
     public record struct TraceExceptionInfo
     {

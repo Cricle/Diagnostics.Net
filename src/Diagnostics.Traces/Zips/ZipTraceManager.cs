@@ -72,7 +72,6 @@
         protected override void OnDisposed()
         {
             tokenSource.Cancel();
-            GC.SuppressFinalize(this);
         }
     }
 }

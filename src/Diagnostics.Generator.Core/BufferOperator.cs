@@ -13,11 +13,11 @@ namespace Diagnostics.Generator.Core
         private readonly Task task;
         private readonly CancellationTokenSource tokenSource;
 
-        public BufferOperator(IOpetatorHandler<T> handler)
+        public BufferOperator(IOperatorHandler<T> handler)
             : this(handler, true, false)
         {
         }
-        public BufferOperator(IOpetatorHandler<T> handler, bool wait, bool continueCaptureContext)
+        public BufferOperator(IOperatorHandler<T> handler, bool wait, bool continueCaptureContext)
         {
             Wait = wait;
             Handler = handler ?? throw new ArgumentNullException(nameof(handler));
@@ -32,7 +32,7 @@ namespace Diagnostics.Generator.Core
 
         public bool ContinueCaptureContext { get; }
 
-        public IOpetatorHandler<T> Handler { get; }
+        public IOperatorHandler<T> Handler { get; }
 
         public Task Task => task;
 

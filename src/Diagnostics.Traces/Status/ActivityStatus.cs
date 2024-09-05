@@ -65,7 +65,7 @@ namespace Diagnostics.Traces.Status
 
             if (activity.Status == ActivityStatusCode.Error)
             {
-                Interlocked.Decrement(ref errorActivityCount);
+                Interlocked.Increment(ref errorActivityCount);
             }
 
             OnActivityStoped(activity);

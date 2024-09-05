@@ -13,7 +13,7 @@ namespace Diagnostics.Traces
     {
         public ExceptionMonitor(IBatchOperatorHandler<TraceExceptionInfo> exceptionHandler, int bufferSize = 512, int swapDelayTimeMs = 5000)
         {
-            ExceptionHandler = exceptionHandler;
+            ExceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
             exceptionOperator = new BatchBufferOperator<TraceExceptionInfo>(exceptionHandler, bufferSize, swapDelayTimeMs);
             AppDomain.CurrentDomain.FirstChanceException += OnFirstChanceException;
         }
@@ -28,7 +28,9 @@ namespace Diagnostics.Traces
             exceptionOperator.Add(new TraceExceptionInfo(e.Exception, activity?.TraceId.ToString(), activity?.SpanId.ToString()));
         }
 
-        private readonly BatchBufferOperator<TraceExceptionInfo> exceptionOperator;
+        private int disposedCount;
+
+        internal readonly BatchBufferOperator<TraceExceptionInfo> exceptionOperator;
 
         public IBatchOperatorHandler<TraceExceptionInfo> ExceptionHandler { get; }
 
@@ -36,6 +38,10 @@ namespace Diagnostics.Traces
 
         public void Dispose()
         {
+            if (Interlocked.Increment(ref disposedCount) > 1)
+            {
+                return;
+            }
             AppDomain.CurrentDomain.FirstChanceException -= OnFirstChanceException;
             exceptionOperator.Dispose();
         }

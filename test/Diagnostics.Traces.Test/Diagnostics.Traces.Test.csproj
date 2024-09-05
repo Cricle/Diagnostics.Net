@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -20,13 +20,12 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Diagnostics.Traces\Diagnostics.Traces.csproj" />
   </ItemGroup>
+	<ItemGroup>
+		<Compile Include="../Diagnostics.Generator.Core.Test/ActivityListenerBox.cs"></Compile>
+	</ItemGroup>
 
   <ItemGroup>
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Status\" />
   </ItemGroup>
 
 </Project>

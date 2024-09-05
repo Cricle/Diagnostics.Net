@@ -5,7 +5,7 @@ using System.Buffers;
 
 namespace Diagnostics.Traces.Mini
 {
-    public class MiniStringStore : StringStoreBase
+    public class MiniStringStore : BytesStoreBase
     {
         public MiniStringStore(IUndefinedDatabaseSelector<MiniDatabaseCreatedResult> databaseSelector, string name)
         {

@@ -1,15 +1,18 @@
 ﻿using OpenTelemetry.Metrics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Diagnostics.Traces.Models
 {
+    [ExcludeFromCodeCoverage]
     [JsonSerializable(typeof(MetricEntity))]
     [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
     public partial class MetricEntityJsonSerializerContext : JsonSerializerContext
     {
 
     }
+    [ExcludeFromCodeCoverage]
     [JsonSerializable(typeof(MetricEntity))]
     [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
     public partial class MetricEntityIgnoreNullJsonSerializerContext : JsonSerializerContext

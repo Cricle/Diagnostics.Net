@@ -10,8 +10,9 @@
         {
             if (delayTime.Ticks <= 0)
             {
-                throw new ArgumentOutOfRangeException($"The delayTime ticks is less than zero!");
+                throw new ArgumentOutOfRangeException(nameof(delayTime), "The delayTime ticks is less than zero!");
             }
+
             DelayTime = delayTime;
             tokenSource = new CancellationTokenSource();
             task = Task.Factory.StartNew(HandleCore, this, TaskCreationOptions.LongRunning);
@@ -35,7 +36,7 @@
                 try
                 {
                     var tsk = handler.Handle();
-                    if (!tsk.IsCompleted)
+                    if (!tsk.IsCompleted && tsk.Exception != null)
                     {
                         await tsk;
                     }

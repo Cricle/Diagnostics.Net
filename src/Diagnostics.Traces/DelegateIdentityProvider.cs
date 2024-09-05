@@ -5,7 +5,7 @@
     {
         public DelegateIdentityProvider(Func<TInput, GetIdentityResult<TIdentity>> getter)
         {
-            Getter = getter;
+            Getter = getter ?? throw new ArgumentNullException(nameof(getter));
         }
 
         public Func<TInput, GetIdentityResult<TIdentity>> Getter { get; }

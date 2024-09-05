@@ -7,7 +7,7 @@ namespace Diagnostics.Generator.Core.Test
     public class BufferOperatorTest
     {
         [ExcludeFromCodeCoverage]
-        class ExceptionOpetatorHandler<T> : IOpetatorHandler<T>
+        class ExceptionOpetatorHandler<T> : IOperatorHandler<T>
         {
             public Task HandleAsync(T input, CancellationToken token)
             {
@@ -15,7 +15,7 @@ namespace Diagnostics.Generator.Core.Test
             }
         }
         [ExcludeFromCodeCoverage]
-        class OpetatorHandler<T> : IOpetatorHandler<T>
+        class OpetatorHandler<T> : IOperatorHandler<T>
         {
             public T? LastValue;
 
@@ -26,7 +26,7 @@ namespace Diagnostics.Generator.Core.Test
             }
         }
         [ExcludeFromCodeCoverage]
-        class StoreOpetatorHandler<T> : IOpetatorHandler<T>
+        class StoreOpetatorHandler<T> : IOperatorHandler<T>
         {
             public List<T> LastValues { get; } = new List<T>();
 
@@ -38,7 +38,7 @@ namespace Diagnostics.Generator.Core.Test
             }
         }
         [ExcludeFromCodeCoverage]
-        class AsyncOpetatorHandler<T> : IOpetatorHandler<T>
+        class AsyncOpetatorHandler<T> : IOperatorHandler<T>
         {
             public T? LastValue;
 

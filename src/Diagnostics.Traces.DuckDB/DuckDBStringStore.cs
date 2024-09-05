@@ -2,7 +2,7 @@
 
 namespace Diagnostics.Traces.DuckDB
 {
-    public class DuckDBStringStore : StringStoreBase, IDisposable
+    public class DuckDBStringStore : BytesStoreBase, IDisposable
     {
         public DuckDBStringStore(IUndefinedDatabaseSelector<DuckDBDatabaseCreatedResult> databaseSelector, string name)
         {
