@@ -1,0 +1,9 @@
+﻿#pragma warning disable CS8604
+#nullable enable
+internal unsafe partial class TestEventSource
+{
+    [Diagnostics.Generator.Core.Annotations.EventSourceAccesstorInstanceAttribute]
+    public static readonly global::TestEventSource Instance = new global::TestEventSource();
+}
+#nullable restore
+#pragma warning restore

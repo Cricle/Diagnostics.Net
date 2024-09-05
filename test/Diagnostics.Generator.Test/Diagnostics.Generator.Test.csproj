@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <None Remove="Baselines\TestEventSource.Event1.txt" />
+    <None Remove="Baselines\TestEventSource.Event2.txt" />
+    <None Remove="Baselines\TestEventSource.Event3.txt" />
+    <None Remove="Baselines\TestEventSource.Event4.txt" />
+    <None Remove="Baselines\TestEventSource.NoNs.Event0.txt" />
+    <None Remove="Baselines\TestEventSource.NoNs.Event1.txt" />
+    <None Remove="Baselines\TestEventSource.NoNs.Event2.txt" />
+    <None Remove="Baselines\TestEventSource.NoNs.Event3.txt" />
+    <None Remove="Baselines\TestEventSource.NoNs.Event4.txt" />
+    <None Remove="Baselines\TestEventSource.NoNs.Singleton.txt" />
+    <None Remove="Baselines\TestEventSource.Singleton.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Baselines\*.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing" Version="1.1.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Diagnostics.Generator.Core\Diagnostics.Generator.Core.csproj" />
+    <ProjectReference Include="..\..\src\Diagnostics.Generator\Diagnostics.Generator.csproj" />
+  </ItemGroup>
+
+</Project>

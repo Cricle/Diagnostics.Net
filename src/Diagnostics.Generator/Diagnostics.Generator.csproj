@@ -23,4 +23,7 @@
 		<Compile Include="../Diagnostics.Generator.Core/ArrayOptions.cs"></Compile> 
 		<Compile Include="../Diagnostics.Generator.Core/ActivityAsTypes.cs"></Compile> 
 	</ItemGroup>
+	<ItemGroup>
+		<InternalsVisibleTo Include="Diagnostics.Generator.Test"/>
+	</ItemGroup>
 </Project>

@@ -1,0 +1,12 @@
+﻿#pragma warning disable CS8604
+#nullable enable
+namespace evev
+{
+    internal unsafe partial class TestEventSource
+    {
+        [Diagnostics.Generator.Core.Annotations.EventSourceAccesstorInstanceAttribute]
+        public static readonly global::evev.TestEventSource Instance = new global::evev.TestEventSource();
+    }
+}
+#nullable restore
+#pragma warning restore
