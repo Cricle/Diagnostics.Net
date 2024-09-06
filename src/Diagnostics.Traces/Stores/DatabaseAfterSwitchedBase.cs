@@ -18,9 +18,9 @@
             return result.FilePath;
         }
 
-        protected virtual Task BeginGzipAsync()
+        protected virtual async Task BeginGzipAsync()
         {
-            return Task.Delay(1000);
+            await Task.Delay(1000);
         }
 
         public event EventHandler<Exception>? ExceptionRaised;

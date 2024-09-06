@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Diagnostics.Traces.Stores
 {
@@ -17,11 +18,15 @@ namespace Diagnostics.Traces.Stores
 
             public DatabaseManager(long limitCount, Func<TResult> databaseCreator, IList<IUndefinedDatabaseAfterSwitched<TResult>> afterSwitcheds, IList<IUndefinedResultInitializer<TResult>> initializers)
             {
+                Debug.Assert(databaseCreator != null);
+                Debug.Assert(afterSwitcheds != null);
+                Debug.Assert(initializers != null);
+
                 locker = new SpinLock();
                 this.limitCount = limitCount;
-                DatabaseCreator = databaseCreator;
-                AfterSwitcheds = afterSwitcheds;
-                Initializers = initializers;
+                DatabaseCreator = databaseCreator!;
+                AfterSwitcheds = afterSwitcheds!;
+                Initializers = initializers!;
             }
             private readonly long limitCount;
 
@@ -125,7 +130,7 @@ namespace Diagnostics.Traces.Stores
 
             public void ReportInserted(int count)
             {
-                if (Interlocked.Add(ref inserted, count) > limitCount)
+                if (Interlocked.Add(ref inserted, count) >= limitCount)
                 {
                     Switch();
                 }
@@ -203,16 +208,21 @@ namespace Diagnostics.Traces.Stores
                 });
             }
         }
-
+        private int disposedCount;
         private readonly DatabaseManager manager;
 
         public DayOrLimitDatabaseSelector(Func<TResult> databaseCreator,
             long limitCount = DefaultLimitCount)
         {
-            DatabaseCreator = databaseCreator;
+            if (limitCount <= 0)
+            {
+                throw new ArgumentException($"The limit count must more than 1");
+            }
+
+            DatabaseCreator = databaseCreator ?? throw new ArgumentNullException(nameof(databaseCreator));
             AfterSwitcheds = new List<IUndefinedDatabaseAfterSwitched<TResult>>();
             Initializers = new List<IUndefinedResultInitializer<TResult>>();
-            manager = new DatabaseManager(limitCount, () => databaseCreator(), AfterSwitcheds, Initializers);
+            manager = new DatabaseManager(limitCount, databaseCreator, AfterSwitcheds, Initializers);
         }
 
         public IList<IUndefinedDatabaseAfterSwitched<TResult>> AfterSwitcheds { get; }
@@ -264,7 +274,10 @@ namespace Diagnostics.Traces.Stores
 
         public void Dispose()
         {
-            manager.Dispose();
+            if (Interlocked.Increment(ref disposedCount) == 1)
+            {
+                manager.Dispose();
+            }
         }
 
         public TReturn UsingDatabaseResult<TReturn>(Func<TResult, TReturn> @using)

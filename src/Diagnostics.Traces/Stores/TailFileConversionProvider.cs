@@ -4,7 +4,7 @@
     {
         public TailFileConversionProvider(string tail)
         {
-            Tail = tail;
+            Tail = tail ?? throw new ArgumentNullException(nameof(tail));
         }
 
         public string Tail { get; }
