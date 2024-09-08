@@ -5,16 +5,14 @@
     {
         public ConstDatabaseSelector(TResult result)
         {
-            Result = result;
-            AfterSwitcheds = new List<IUndefinedDatabaseAfterSwitched<TResult>>(0);
-            Initializers = new List<IUndefinedResultInitializer<TResult>>(0);
+            Result = result ?? throw new ArgumentNullException(nameof(result));
         }
 
         public TResult Result { get; }
 
-        public IList<IUndefinedDatabaseAfterSwitched<TResult>> AfterSwitcheds { get; }
+        public IList<IUndefinedDatabaseAfterSwitched<TResult>> AfterSwitcheds => throw new NotSupportedException();
 
-        public IList<IUndefinedResultInitializer<TResult>> Initializers { get; }
+        public IList<IUndefinedResultInitializer<TResult>> Initializers => throw new NotSupportedException();
 
         public void Dispose()
         {
@@ -54,7 +52,7 @@
 
         public TReturn UnsafeUsingDatabaseResult<TState, TReturn>(TState state, Func<TResult, TState, TReturn> @using)
         {
-            return @using(Result,state);
+            return @using(Result, state);
         }
 
         public void UsingDatabaseResult(Action<TResult> @using)

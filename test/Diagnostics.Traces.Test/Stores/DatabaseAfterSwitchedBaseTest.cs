@@ -3,22 +3,22 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Diagnostics.Traces.Test.Stores
 {
+    [ExcludeFromCodeCoverage]
+    class DatabaseCreatedResult : IDatabaseCreatedResult
+    {
+        public object Root { get; set; }
+
+        public string? FilePath { get; set; }
+
+        public string Key { get; set; }
+
+        public void Dispose()
+        {
+        }
+    }
     [TestClass]
     public class DatabaseAfterSwitchedBaseTest
     {
-        [ExcludeFromCodeCoverage]
-        class DatabaseCreatedResult : IDatabaseCreatedResult
-        {
-            public object Root { get; set; }
-
-            public string? FilePath { get; set; }
-
-            public string Key { get; set; }
-
-            public void Dispose()
-            {
-            }
-        }
 
         [ExcludeFromCodeCoverage]
         class TestDatabaseAfterSwitched<T> : DatabaseAfterSwitchedBase<T>

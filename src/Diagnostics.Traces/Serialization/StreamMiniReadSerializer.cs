@@ -4,7 +4,7 @@
     {
         public StreamMiniReadSerializer(Stream stream)
         {
-            Stream = stream;
+            Stream = stream ?? throw new ArgumentNullException(nameof(stream));
         }
 
         public Stream Stream { get; }

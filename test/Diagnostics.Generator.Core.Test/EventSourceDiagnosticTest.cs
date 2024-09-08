@@ -17,10 +17,21 @@ namespace Diagnostics.Generator.Core.Test
             }
         }
 
+        [ExcludeFromCodeCoverage]
+        [EventSource(Name = "TestEventSource1")]
+        class TestEventSource1 : EventSource
+        {
+            [Event(1, Level = EventLevel.Informational)]
+            public void Raise()
+            {
+                WriteEvent(1);
+            }
+        }
+
         [TestMethod]
         public async Task Once()
         {
-            var ev = new TestEventSource();
+            var ev = new TestEventSource1();
             var timeoutToken = new CancellationTokenSource(TimeSpan.FromSeconds(5));
             var tsk = Task.Factory.StartNew(() => EventSourceDiagnostic.GetOnceAsync(ev, token: timeoutToken.Token)).Unwrap();
             await Task.Delay(1000);

@@ -4,7 +4,7 @@
     {
         public StartWithLastWriteFileDeleteRules(string path, int keepFileCount, string searchPattern = "*")
         {
-            Path = path;
+            Path = path ?? throw new ArgumentNullException(nameof(path));
             KeepFileCount = keepFileCount;
 
             if (keepFileCount <= 1)
