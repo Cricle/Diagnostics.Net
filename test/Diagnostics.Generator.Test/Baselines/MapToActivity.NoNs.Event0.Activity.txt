@@ -1,0 +1,46 @@
+﻿#pragma warning disable CS8604
+#nullable enable
+[global::Diagnostics.Generator.Core.Annotations.ActivityMapToEventSourceAttribute(typeof(global::TestEventSource), 1)]
+internal partial class TestActivity
+{
+#region Event0
+    [global::Diagnostics.Generator.Core.Annotations.ActivityMapToEventAttribute(1, "Event0", new global::System.Type[] { typeof(string) })]
+    public void Event0(string? arg0, global::System.DateTimeOffset timestamp = default, global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>? additionTags = null, [global::System.Runtime.CompilerServices.CallerFilePathAttribute] string? filePath = null, [global::System.Runtime.CompilerServices.CallerMemberNameAttribute] string? memberName = null, [global::System.Runtime.CompilerServices.CallerLineNumberAttribute] int lineNumber = 0)
+    {
+        Event0(global::System.Diagnostics.Activity.Current, arg0, timestamp, additionTags);
+    }
+
+    [global::Diagnostics.Generator.Core.Annotations.ActivityMapToEventAttribute(1, "Event0", new global::System.Type[] { typeof(string) })]
+    public void Event0(global::System.Diagnostics.Activity? activity, string? arg0, global::System.DateTimeOffset timestamp = default, global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>? additionTags = null, [global::System.Runtime.CompilerServices.CallerFilePathAttribute] string? filePath = null, [global::System.Runtime.CompilerServices.CallerMemberNameAttribute] string? memberName = null, [global::System.Runtime.CompilerServices.CallerLineNumberAttribute] int lineNumber = 0)
+    {
+        if (global::TestEventSource.Instance.IsEnabled())
+        {
+            global::TestEventSource.Instance.Event0(arg0);
+        }
+
+        if (activity != null)
+        {
+            global::System.Diagnostics.ActivityTagsCollection? tags = null;
+            tags = new global::System.Diagnostics.ActivityTagsCollection();
+            tags["arg0"] = arg0;
+            if (additionTags != null)
+            {
+                foreach (global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?> tag in additionTags)
+                {
+                    if (tag.Key != null)
+                    {
+                        tags[tag.Key] = tag.Value;
+                    }
+                }
+            }
+
+            activity.AddEvent(new global::System.Diagnostics.ActivityEvent("Event0", timestamp, tags));
+            OnEvent0(activity, arg0, timestamp, additionTags);
+        }
+    }
+
+    partial void OnEvent0(global::System.Diagnostics.Activity? activity, string? arg0, global::System.DateTimeOffset timestamp = default, global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>? additionTags = null, [global::System.Runtime.CompilerServices.CallerFilePathAttribute] string? filePath = null, [global::System.Runtime.CompilerServices.CallerMemberNameAttribute] string? memberName = null, [global::System.Runtime.CompilerServices.CallerLineNumberAttribute] int lineNumber = 0);
+#endregion
+}
+#nullable restore
+#pragma warning restore

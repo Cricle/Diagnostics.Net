@@ -1,0 +1,26 @@
+﻿#pragma warning disable CS8604
+#nullable enable
+namespace evev
+{
+    internal unsafe partial class TestEventSource
+    {
+        [Diagnostics.Generator.Core.Annotations.EventSourceAccesstorInstanceAttribute]
+        public static readonly global::evev.TestEventSource Instance = new global::evev.TestEventSource();
+        public partial void Event0(string? arg0)
+        {
+            global::System.Diagnostics.Tracing.EventSource.EventData* datas = stackalloc global::System.Diagnostics.Tracing.EventSource.EventData[1];
+            datas[0] = new global::System.Diagnostics.Tracing.EventSource.EventData
+            {
+                DataPointer = arg0 == null ? global::System.IntPtr.Zero : (nint)global::System.Runtime.CompilerServices.Unsafe.AsPointer(ref global::System.Runtime.InteropServices.MemoryMarshal.GetReference(global::System.MemoryExtensions.AsSpan(arg0))),
+                Size = arg0 == null ? 0 : checked((arg0.Length + 1) * sizeof(char))
+            };
+            WriteEventWithRelatedActivityIdCore(1, null, 1, datas);
+            OnEvent0(arg0);
+        }
+
+        [global::System.Diagnostics.Tracing.NonEventAttribute]
+        partial void OnEvent0(string? arg0);
+    }
+}
+#nullable restore
+#pragma warning restore

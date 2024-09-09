@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <None Remove="Baselines\MapToActivity.Event0.Activity.txt" />
+    <None Remove="Baselines\MapToActivity.Event0.Event.txt" />
+    <None Remove="Baselines\MapToActivity.NoNs.Event0.Activity.txt" />
+    <None Remove="Baselines\MapToActivity.NoNs.Event0.Event.txt" />
     <None Remove="Baselines\TestEventSource.Event1.txt" />
     <None Remove="Baselines\TestEventSource.Event2.txt" />
     <None Remove="Baselines\TestEventSource.Event3.txt" />

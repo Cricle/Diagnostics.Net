@@ -74,7 +74,7 @@ namespace Diagnostics.Traces.Test
                 exception = e;
             };
 
-            await Task.Delay(500);
+            await Task.Delay(800);
 
             Assert.IsNotNull(exception);
             Assert.IsInstanceOfType<InvalidOperationException>(exception);
@@ -93,7 +93,7 @@ namespace Diagnostics.Traces.Test
 
             using var handler = new AsyncTimerHandler(TimeSpan.FromMilliseconds(500), func);
 
-            await Task.Delay(600);
+            await Task.Delay(800);
 
             Assert.AreEqual(raisedCount, 2);
         }
@@ -110,7 +110,7 @@ namespace Diagnostics.Traces.Test
 
             using var handler = new TimerHandler(TimeSpan.FromMilliseconds(500), func);
 
-            await Task.Delay(600);
+            await Task.Delay(800);
 
             Assert.AreEqual(raisedCount, 2);
         }

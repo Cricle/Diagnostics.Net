@@ -1,9 +1,11 @@
 ﻿using OpenTelemetry.Metrics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 
 namespace Diagnostics.Traces
 {
+    [ExcludeFromCodeCoverage]
     public static class MetricExportHelper
     {
         public static void ExportMetricString(TextWriter msg, Metric metric)

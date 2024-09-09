@@ -6,7 +6,7 @@
         {
             Root = new object();
             FilePath = filePath;
-            Key = key;
+            Key = key ?? throw new ArgumentNullException(nameof(key));
         }
         private int disposedCount;
 

@@ -38,15 +38,12 @@ namespace Diagnostics.Traces
             writer.WriteString("ParentId", value.ParentId);
             writer.WriteString("RootId", value.RootId);
 
-            writer.WriteStartArray("Tags");
+            writer.WriteStartObject("Tags");
             foreach (var tag in value.Tags)
             {
-                writer.WriteStartObject();
-                writer.WriteString("Key", tag.Key);
-                writer.WriteString("Value", tag.Value);
-                writer.WriteEndObject();
+                writer.WriteString(tag.Key,tag.Value);
             }
-            writer.WriteEndArray();
+            writer.WriteEndObject();
 
             writer.WriteStartArray("Events");
             foreach (var activityEvent in value.Events)
@@ -55,15 +52,12 @@ namespace Diagnostics.Traces
                 writer.WriteString("Name", activityEvent.Name);
                 writer.WriteString("Timestamp", activityEvent.Timestamp.ToLocalTime().ToString(TimeFormat));
 
-                writer.WriteStartArray("Tags");
+                writer.WriteStartObject("Tags");
                 foreach (var tag in activityEvent.Tags)
                 {
-                    writer.WriteStartObject();
-                    writer.WriteString("Key", tag.Key);
-                    writer.WriteString("Value", tag.Value?.ToString());
-                    writer.WriteEndObject();
+                    writer.WriteString(tag.Key, tag.Value?.ToString());
                 }
-                writer.WriteEndArray();
+                writer.WriteEndObject();
 
                 writer.WriteEndObject();
             }
@@ -96,15 +90,12 @@ namespace Diagnostics.Traces
             }
             writer.WriteEndArray();
 
-            writer.WriteStartArray("Baggage");
+            writer.WriteStartObject("Baggage");
             foreach (var baggageItem in value.Baggage)
             {
-                writer.WriteStartObject();
-                writer.WriteString("Key", baggageItem.Key);
-                writer.WriteString("Value", baggageItem.Value);
-                writer.WriteEndObject();
+                writer.WriteString(baggageItem.Key, baggageItem.Value);
             }
-            writer.WriteEndArray();
+            writer.WriteEndObject();
 
             writer.WriteStartObject("Context");
             writer.WriteString("TraceId", value.Context.TraceId.ToString());
