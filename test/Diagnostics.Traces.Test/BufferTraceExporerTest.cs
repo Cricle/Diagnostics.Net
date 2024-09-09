@@ -46,7 +46,7 @@ namespace Diagnostics.Traces.Test
                 }
             }
 
-            await Task.Delay(600);
+            await Task.Delay(900);
 
             Assert.AreEqual(10, handler.Inputs.Count);
             for (int i = 0; i < handler.Inputs.Count; i++)

@@ -1,15 +1,8 @@
-﻿using System.Diagnostics;
-
-namespace Diagnostics.Generator.Test
+﻿namespace Diagnostics.Generator.Test
 {
     [TestClass]
     public class MapToActivityGeneratedTest
     {
-        static MapToActivityGeneratedTest()
-        {
-            _ = new ActivitySource("null");//Activity the assembly
-        }
-
         [TestMethod]
         public void GenerateMapToActivity()
         {

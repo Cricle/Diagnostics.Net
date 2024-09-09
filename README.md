@@ -4,7 +4,7 @@ Diagnostics.Net
 <div align="center">
 
 [![.NET Build](https://github.com/Cricle/Diagnostics.Net/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Cricle/Diagnostics.Net/actions/workflows/dotnet.yml)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/c98ef772145b4d3d85614264858c65de)](https://app.codacy.com/gh/Cricle/Diagnostics.Net/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/c98ef772145b4d3d85614264858c65de)](https://app.codacy.com/gh/Cricle/Diagnostics.Net/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 
 </div>
 

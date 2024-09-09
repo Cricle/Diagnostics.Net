@@ -15,6 +15,7 @@ namespace Diagnostics.Generator.Test
                 {
                     MetadataReference.CreateFromFile(typeof(Attribute).GetTypeInfo().Assembly.Location),
                     MetadataReference.CreateFromFile(typeof(InterlockedHelper).GetTypeInfo().Assembly.Location),
+                    MetadataReference.CreateFromFile(typeof(System.Diagnostics.ActivitySource).Assembly.Location)
                 }.Concat(AppDomain.CurrentDomain.GetAssemblies().Where(x =>
                 {
                     try

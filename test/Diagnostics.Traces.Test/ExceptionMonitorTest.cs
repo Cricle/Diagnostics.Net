@@ -62,6 +62,7 @@ namespace Diagnostics.Traces.Test
         {
             var ex = new InvalidOperationException("test");
             var handler = new BatchOperatorHandler();
+            Activity.Current?.Dispose();
             using var monitor = new ExceptionMonitor(handler, 1) { CatchMode = ExceptionCatchMode.OnlyHasActivity };
             Assert.AreEqual(monitor.CatchMode, ExceptionCatchMode.OnlyHasActivity);
             try

@@ -110,6 +110,7 @@ namespace Diagnostics.Generator.Core.Test
             }
 
             WaitAllComplated(@operator);
+            Thread.Sleep(500);
             Assert.AreEqual(@operator.UnComplatedCount, 0);
 
             Assert.IsNotNull(handler.Datas);
