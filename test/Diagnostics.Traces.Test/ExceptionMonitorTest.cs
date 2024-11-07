@@ -60,6 +60,7 @@ namespace Diagnostics.Traces.Test
         [TestMethod]
         public void ExceptionRaise_OnlyHasActivity_NothingCaptched()
         {
+            Activity.Current?.Dispose();
             var ex = new InvalidOperationException("test");
             var handler = new BatchOperatorHandler();
             Activity.Current?.Dispose();

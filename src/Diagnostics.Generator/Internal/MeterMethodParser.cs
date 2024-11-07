@@ -1,7 +1,6 @@
 ﻿using Diagnostics.Generator.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -26,7 +25,7 @@ namespace Diagnostics.Generator.Internal
             var unsafeKeyword = classHasUnsafe ? "unsafe" : string.Empty;
             var visibility = GetVisiblity(symbol);
             var staticKeyword = symbol.IsStatic ? "static" : string.Empty;
-            GeneratorTransformResult<ISymbol>.GetWriteNameSpace(symbol,node.SemanticModel, out var nameSpaceStart, out var nameSpaceEnd);
+            GetWriteNameSpace(symbol,node.SemanticModel, out var nameSpaceStart, out var nameSpaceEnd);
 
             var bodyBuilder = new StringBuilder();
             foreach (var item in methods)
@@ -62,19 +61,6 @@ namespace Diagnostics.Generator.Internal
             context.AddSource($"{node.Value.Name}.Meters.g.cs", code);
         }
 
-        private static ISymbol? GetTypeParamterSymbol(ISymbol symbol,int index)
-        {
-            if (symbol is IFieldSymbol fieldSymbol)
-            {
-                return ((INamedTypeSymbol)fieldSymbol.Type).TypeArguments[index];
-            }
-            else if (symbol is IPropertySymbol propertySymbol)
-            {
-                return ((INamedTypeSymbol)propertySymbol.Type).TypeArguments[index];
-            }
-            return null;
-        }
-
         private static bool TryWriteMeterCodes(IMethodSymbol method, out string? code, out Diagnostic? diagnostic)
         {
             code = null;
@@ -104,7 +90,7 @@ namespace Diagnostics.Generator.Internal
                 return false;
             }
             //Check arg and counter type
-            var meterType = GetTypeParamterSymbol(type, 0);
+            var meterType = GetFieldOrPropertySymbolType(type, 0);
             if (method.Parameters.Length == 0 ||
                 !SymbolEqualityComparer.Default.Equals(meterType, method.Parameters[0].Type))
             {

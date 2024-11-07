@@ -17,10 +17,6 @@ namespace Diagnostics.Generator.Internal
             var exceptionType = model.Compilation.GetTypeByMetadataName("System.Exception");
             return SymbolEqualityComparer.Default.Equals(type, exceptionType);
         }
-        public static string GetVisiblity(ISymbol symbol)
-        {
-            return GeneratorTransformResult<ISymbol>.GetAccessibilityString(symbol.DeclaredAccessibility);
-        }
         public static string GetSpecialName(string name)
         {
             var specialName = name.TrimStart('_');
@@ -29,12 +25,12 @@ namespace Diagnostics.Generator.Internal
         public static bool TryWriteCode(SourceProductionContext context, SemanticModel model, INamedTypeSymbol symbol,INamedTypeSymbol originSymbol, bool logMode, IEnumerable<IMethodSymbol> methods, out string? outCode)
         {
             var nullableEnable = symbol.GetNullableContext(model);
-            var visibility = GetVisiblity(symbol);
-            GeneratorTransformResult<ISymbol>.GetWriteNameSpace(symbol, model, out var nameSpaceStart, out var nameSpaceEnd);
+            var visibility = symbol.GetVisiblityString();
+            ParserBase.GetWriteNameSpace(symbol, model, out var nameSpaceStart, out var nameSpaceEnd);
 
-            var fullName = GeneratorTransformResult<ISymbol>.GetTypeFullName(symbol);
+            var fullName = ParserBase.GetTypeFullName(symbol);
             var className = symbol.Name;
-            var @namespace = GeneratorTransformResult<ISymbol>.GetNameSpace(symbol);
+            var @namespace = ParserBase.GetNameSpace(symbol);
             if (!string.IsNullOrEmpty(@namespace))
             {
                 @namespace = "global::" + @namespace;
@@ -115,7 +111,7 @@ namespace Diagnostics.Generator.Internal
                 {
                     interfaceAccessibility = Accessibility.Public;
                 }
-                var interfaceAccessibilityStr = GeneratorTransformResult<ISymbol>.GetAccessibilityString(interfaceAccessibility);
+                var interfaceAccessibilityStr = ParserBase.GetAccessibilityString(interfaceAccessibility);
                 interfaceBody = $@"
 {interfaceAccessibilityStr} interface I{symbol.Name}
 {{
@@ -176,7 +172,7 @@ namespace Diagnostics.Generator.Internal
                     }
                 }
                 idScript = @$"
-{GeneratorTransformResult<ISymbol>.GetAccessibilityString(generateVisibility)} static class Ids
+{ParserBase.GetAccessibilityString(generateVisibility)} static class Ids
 {{
     public const int IdCount = {buildIdMethods.Count};
 
@@ -578,7 +574,7 @@ protected override void OnEventCommand(global::System.Diagnostics.Tracing.EventC
             }
             var s = $@"
 {attributes}
-{GeneratorTransformResult<ISymbol>.GetAccessibilityString(method.DeclaredAccessibility)} {unsafeKeyWord} {partialKey} {method.ReturnType} {method.Name}({argList})
+{ParserBase.GetAccessibilityString(method.DeclaredAccessibility)} {unsafeKeyWord} {partialKey} {method.ReturnType} {method.Name}({argList})
 {{
     {isEnableTop}
     {isEnableBegin}

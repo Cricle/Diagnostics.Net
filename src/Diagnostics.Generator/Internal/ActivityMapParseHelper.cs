@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -58,10 +57,10 @@ namespace Diagnostics.Generator.Internal
             var nullableEnable = symbol.GetNullableContext(model);
             var visibility = ParserBase.GetVisiblity(symbol);
 
-            GeneratorTransformResult<ISymbol>.GetWriteNameSpace(symbol, model, out var nameSpaceStart, out var nameSpaceEnd);
+            ParserBase.GetWriteNameSpace(symbol, model, out var nameSpaceStart, out var nameSpaceEnd);
 
-            var fullName = GeneratorTransformResult<ISymbol>.GetTypeFullName(symbol);
-            var @namespace = GeneratorTransformResult<ISymbol>.GetTypeFullName(symbol);
+            var fullName = ParserBase.GetTypeFullName(symbol);
+            var @namespace = ParserBase.GetTypeFullName(symbol);
             if (!string.IsNullOrEmpty(@namespace))
             {
                 @namespace = "global::" + @namespace;
@@ -89,7 +88,7 @@ namespace Diagnostics.Generator.Internal
 
         private static string WriteMethodMap(bool isStatic, IMethodSymbol method, SemanticModel model, bool withCallTog, string eventSource, bool callEventAtEnd, bool logMode, bool generateWithLog)
         {
-            var visibility = GeneratorTransformResult<ISymbol>.GetAccessibilityString(method.DeclaredAccessibility);
+            var visibility = ParserBase.GetAccessibilityString(method.DeclaredAccessibility);
             var staticKeyword = isStatic ? "static" : string.Empty;
             var tags = method.GetAttributes(Consts.ActivityTagAttribute.FullName);
             var isNoEvent = method.HasAttribute(Consts.ActivityNoEventAttribute.FullName);

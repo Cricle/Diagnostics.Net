@@ -25,7 +25,7 @@ namespace Diagnostics.Generator.Internal
         {
             var symbol = (INamedTypeSymbol)node.Value;
             var origin = symbol;
-            GeneratorTransformResult<ISymbol>.GetWriteNameSpace(symbol, node.SemanticModel, out var nameSpaceStart, out var nameSpaceEnd);
+            GetWriteNameSpace(symbol, node.SemanticModel, out var nameSpaceStart, out var nameSpaceEnd);
             var attr = symbol.GetAttribute(Consts.ActivityAsAttribute.FullName)!;
             var target = attr.GetByNamed<ISymbol>(Consts.ActivityAsAttribute.TargetType);
             var isSelf = true;
@@ -52,7 +52,7 @@ namespace Diagnostics.Generator.Internal
             var visibility = GetVisiblity(origin);
             var asMethod = attr.GetByNamed<ActivityAsTypes>(Consts.ActivityAsAttribute.As) == ActivityAsTypes.Tag ? "SetTag" : "SetBaggage";
             var kindKeyword = origin.TypeKind == TypeKind.Class ? "class" : "struct";
-            var symbolFullName = GeneratorTransformResult<ISymbol>.GetTypeFullName(symbol);
+            var symbolFullName = GetTypeFullName(symbol);
             var interfaces = string.Empty;
             if (!origin.IsStatic)
             {
@@ -163,7 +163,7 @@ public {staticKeywork} void Write(global::System.Diagnostics.Activity? activity)
 ");
             }
             var singletonExp = string.Empty;
-            var originFullName = GeneratorTransformResult<ISymbol>.GetTypeFullName(origin);
+            var originFullName = GetTypeFullName(origin);
             if (!origin.IsStatic && generateSingleton)
             {
                 singletonExp = $"public static readonly {originFullName} Instance = new {originFullName}();";
@@ -210,7 +210,7 @@ public {staticKeywork} void Write(global::System.Diagnostics.Activity? activity)
         {
             if (typeSymbol.SpecialType == SpecialType.None && typeSymbol is INamedTypeSymbol)
             {
-                if (typeSymbol.ToString().StartsWith("System.Collections."))
+                if (typeSymbol.ContainingNamespace.ToString().StartsWith("System.Collections."))
                 {
                     return false;
                 }

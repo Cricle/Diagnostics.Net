@@ -132,10 +132,10 @@ namespace Diagnostics.Generator.Core.Test
             using var listener = new ActivityListenerBox("test");
             using (var activity = source.StartActivity("test", ActivityKind.Internal, default(ActivityContext)))
             {
-                Assert.IsNotNull(activity);
 
                 var offset = DateTimeOffset.Parse("2024-09-04 10:08:00+0");
 
+                Assert.IsNotNull(activity);
                 ActivityAddEventEasyExtensions.AddEvent(activity, "test", ("a1", 1));
                 Assert.AreEqual(activity!.Events.Count(), 1);
                 Assert.AreEqual(activity!.Events.First().Name, "test");

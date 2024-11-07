@@ -1,7 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Text;
+﻿using Microsoft.CodeAnalysis.Text;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace Diagnostics.Generator.Test
 {
@@ -11,7 +10,7 @@ namespace Diagnostics.Generator.Test
         public static SourceText GetBaselineNode(string fileName)
         {
             var text = GetBaseline(fileName);
-            return SourceText.From(text);
+            return SourceText.From(text, Encoding.UTF8);
         }
         public static string GetBaseline(string fileName)
         {

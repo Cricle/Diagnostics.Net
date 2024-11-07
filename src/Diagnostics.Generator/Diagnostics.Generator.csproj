@@ -20,8 +20,9 @@
 	<ItemGroup>
 		<Compile Include="../Diagnostics.Generator.Core/CounterTypes.cs"></Compile>
 		<Compile Include="../Diagnostics.Generator.Core/MeterTypes.cs"></Compile>
-		<Compile Include="../Diagnostics.Generator.Core/ArrayOptions.cs"></Compile> 
-		<Compile Include="../Diagnostics.Generator.Core/ActivityAsTypes.cs"></Compile> 
+		<Compile Include="../Diagnostics.Generator.Core/ArrayOptions.cs"></Compile>
+		<Compile Include="../Diagnostics.Generator.Core/ActivityAsTypes.cs"></Compile>
+		<Compile Include="../Diagnostics.Generator.Core/Annotations/DiagnosticGenerateTypes.cs"></Compile> 
 	</ItemGroup>
 	<ItemGroup>
 		<InternalsVisibleTo Include="Diagnostics.Generator.Test"/>

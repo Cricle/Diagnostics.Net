@@ -19,11 +19,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diagnostics.Traces.Parquet"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6298C31B-7A63-4A6D-AFF1-9AAFAD67EE4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diagnostics.Generator.Core.Test", "test\Diagnostics.Generator.Core.Test\Diagnostics.Generator.Core.Test.csproj", "{0713E7BC-1988-4D2C-BD8C-C8460D50B67A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diagnostics.Generator.Core.Test", "test\Diagnostics.Generator.Core.Test\Diagnostics.Generator.Core.Test.csproj", "{0713E7BC-1988-4D2C-BD8C-C8460D50B67A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diagnostics.Traces.Test", "test\Diagnostics.Traces.Test\Diagnostics.Traces.Test.csproj", "{891E9F07-A23E-4995-91AF-DFF0FD3CE3CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diagnostics.Traces.Test", "test\Diagnostics.Traces.Test\Diagnostics.Traces.Test.csproj", "{891E9F07-A23E-4995-91AF-DFF0FD3CE3CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diagnostics.Generator.Test", "test\Diagnostics.Generator.Test\Diagnostics.Generator.Test.csproj", "{DE6CE9EB-18D0-48FB-A5D6-8E6853FF166F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diagnostics.Generator.Test", "test\Diagnostics.Generator.Test\Diagnostics.Generator.Test.csproj", "{DE6CE9EB-18D0-48FB-A5D6-8E6853FF166F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{564BA30E-C4F9-467F-BA46-E4B4B97CE243}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dignostics.Aspire.AppHost", "samples\Dignostics.Aspire\Dignostics.Aspire.AppHost\Dignostics.Aspire.AppHost.csproj", "{E8BBD201-DEE6-44CB-8B7F-1C5EFB962965}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignostics.Aspire.ServiceDefaults", "samples\Dignostics.Aspire\Dignostics.Aspire.ServiceDefaults\Dignostics.Aspire.ServiceDefaults.csproj", "{172531E7-BB52-4689-8320-23AD694C0ED8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignostics.Aspire.ApiService", "samples\Dignostics.Aspire\Dignostics.Aspire.ApiService\Dignostics.Aspire.ApiService.csproj", "{3E15F54F-EA78-4070-895F-FE641BB6B5AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignostics.Aspire.Web", "samples\Dignostics.Aspire\Dignostics.Aspire.Web\Dignostics.Aspire.Web.csproj", "{D69258DD-D3B7-407C-A622-B0CF3C1C8A24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +81,22 @@ Global
 		{DE6CE9EB-18D0-48FB-A5D6-8E6853FF166F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE6CE9EB-18D0-48FB-A5D6-8E6853FF166F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE6CE9EB-18D0-48FB-A5D6-8E6853FF166F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8BBD201-DEE6-44CB-8B7F-1C5EFB962965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8BBD201-DEE6-44CB-8B7F-1C5EFB962965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8BBD201-DEE6-44CB-8B7F-1C5EFB962965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8BBD201-DEE6-44CB-8B7F-1C5EFB962965}.Release|Any CPU.Build.0 = Release|Any CPU
+		{172531E7-BB52-4689-8320-23AD694C0ED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{172531E7-BB52-4689-8320-23AD694C0ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{172531E7-BB52-4689-8320-23AD694C0ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{172531E7-BB52-4689-8320-23AD694C0ED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E15F54F-EA78-4070-895F-FE641BB6B5AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E15F54F-EA78-4070-895F-FE641BB6B5AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E15F54F-EA78-4070-895F-FE641BB6B5AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E15F54F-EA78-4070-895F-FE641BB6B5AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D69258DD-D3B7-407C-A622-B0CF3C1C8A24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D69258DD-D3B7-407C-A622-B0CF3C1C8A24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D69258DD-D3B7-407C-A622-B0CF3C1C8A24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D69258DD-D3B7-407C-A622-B0CF3C1C8A24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +105,10 @@ Global
 		{0713E7BC-1988-4D2C-BD8C-C8460D50B67A} = {6298C31B-7A63-4A6D-AFF1-9AAFAD67EE4E}
 		{891E9F07-A23E-4995-91AF-DFF0FD3CE3CB} = {6298C31B-7A63-4A6D-AFF1-9AAFAD67EE4E}
 		{DE6CE9EB-18D0-48FB-A5D6-8E6853FF166F} = {6298C31B-7A63-4A6D-AFF1-9AAFAD67EE4E}
+		{E8BBD201-DEE6-44CB-8B7F-1C5EFB962965} = {564BA30E-C4F9-467F-BA46-E4B4B97CE243}
+		{172531E7-BB52-4689-8320-23AD694C0ED8} = {564BA30E-C4F9-467F-BA46-E4B4B97CE243}
+		{3E15F54F-EA78-4070-895F-FE641BB6B5AD} = {564BA30E-C4F9-467F-BA46-E4B4B97CE243}
+		{D69258DD-D3B7-407C-A622-B0CF3C1C8A24} = {564BA30E-C4F9-467F-BA46-E4B4B97CE243}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {12F07862-780A-4CD2-AD10-55A621F9BEC6}

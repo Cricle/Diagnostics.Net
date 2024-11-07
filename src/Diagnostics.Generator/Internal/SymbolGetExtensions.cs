@@ -7,6 +7,10 @@ namespace Diagnostics.Generator.Internal
 {
     internal static class SymbolGetExtensions
     {
+        public static string GetVisiblityString(this ISymbol symbol)
+        {
+            return ParserBase.GetAccessibilityString(symbol.DeclaredAccessibility);
+        }
         public static NullableContext GetNullableContext(this ISymbol symbol, SemanticModel model)
         {
             if (symbol.Locations.Length==0)

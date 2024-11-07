@@ -177,5 +177,9 @@ namespace Diagnostics.Generator
 
             public const string WithDescript = "WithDescript";
         }
+        public static class DiagnosticGenerateAttribute
+        {
+            public const string FullName = "Diagnostics.Generator.Core.Annotations.DiagnosticGenerateAttribute";
+        }
     }
 }
