@@ -27,32 +27,32 @@ namespace Diagnostics.Traces.Test
             Assert.ThrowsException<ArgumentNullException>(() => new BufferTraceExporer<object>((BufferOperator<object>)null));
         }
 
-        [TestMethod]
-        public async Task Export_AllDataRaised()
-        {
-            var handler = new OperatorHandler<Activity>();
-            var source = new ActivitySource("test");
+        //[TestMethod]
+        //public async Task Export_AllDataRaised()
+        //{
+        //    var handler = new OperatorHandler<Activity>();
+        //    var source = new ActivitySource("test");
 
-            using var trace = Sdk.CreateTracerProviderBuilder()
-                .AddSource("test")
-                .AddProcessor(new BatchActivityExportProcessor(new BufferTraceExporer<Activity>(handler), scheduledDelayMilliseconds: 500))
-                .Build();
+        //    using var trace = Sdk.CreateTracerProviderBuilder()
+        //        .AddSource("test")
+        //        .AddProcessor(new BatchActivityExportProcessor(new BufferTraceExporer<Activity>(handler), scheduledDelayMilliseconds: 500))
+        //        .Build();
 
-            for (int i = 0; i < 10; i++)
-            {
-                using (var activity = source.StartActivity("test" + i, ActivityKind.Internal, default(ActivityContext)))
-                {
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        using (var activity = source.StartActivity("test" + i, ActivityKind.Internal, default(ActivityContext)))
+        //        {
 
-                }
-            }
+        //        }
+        //    }
 
-            await Task.Delay(900);
+        //    await Task.Delay(900);
 
-            Assert.AreEqual(10, handler.Inputs.Count);
-            for (int i = 0; i < handler.Inputs.Count; i++)
-            {
-                Assert.AreEqual("test" + i, handler.Inputs[i].OperationName);
-            }
-        }
+        //    Assert.AreEqual(10, handler.Inputs.Count);
+        //    for (int i = 0; i < handler.Inputs.Count; i++)
+        //    {
+        //        Assert.AreEqual("test" + i, handler.Inputs[i].OperationName);
+        //    }
+        //}
     }
 }

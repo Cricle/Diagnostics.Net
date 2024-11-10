@@ -25,6 +25,9 @@
 		<Compile Include="../Diagnostics.Generator.Core/Annotations/DiagnosticGenerateTypes.cs"></Compile> 
 	</ItemGroup>
 	<ItemGroup>
-		<InternalsVisibleTo Include="Diagnostics.Generator.Test"/>
+		<InternalsVisibleTo Include="Diagnostics.Generator.Test" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Models\" />
 	</ItemGroup>
 </Project>

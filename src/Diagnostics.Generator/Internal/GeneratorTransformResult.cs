@@ -18,25 +18,18 @@ namespace Diagnostics.Generator.Internal
 
         public IAssemblySymbol AssemblySymbol => SyntaxContext.SemanticModel.Compilation.Assembly;
 
-        public bool IsAutoGen()
-        {
-            return ParserBase.IsAutoGen(SyntaxContext.TargetSymbol);
-        }
-        public string GetNameSpace()
-        {
-            return ParserBase.GetNameSpace(SyntaxContext.TargetSymbol);
-        }
-        public string GetTypeFullName()
-        {
-            return ParserBase.GetTypeFullName(SyntaxContext.TargetSymbol);
-        }
+        public string AccessibilityString => ParserBase.GetAccessibilityString(SyntaxContext.TargetSymbol.DeclaredAccessibility);
+
+        public bool IsAutoGen=> ParserBase.IsAutoGen(SyntaxContext.TargetSymbol);
+
+        public string NameSpace=> ParserBase.GetNameSpace(SyntaxContext.TargetSymbol);
+
+        public string TypeFullName => ParserBase.GetTypeFullName(SyntaxContext.TargetSymbol);
+
         public void GetWriteNameSpace(SemanticModel model,out string nameSpaceStart, out string nameSpaceEnd)
         {
             ParserBase.GetWriteNameSpace(SyntaxContext.TargetSymbol,model, out nameSpaceStart, out nameSpaceEnd);
         }
-        public string GetAccessibilityString()
-        {
-            return ParserBase.GetAccessibilityString(SyntaxContext.TargetSymbol.DeclaredAccessibility);
-        }
+
     }
 }

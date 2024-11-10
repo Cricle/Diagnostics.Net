@@ -18,10 +18,11 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/weatherforecast", async (ctx) =>
 {
+    var logger=ctx.RequestServices.GetService<ILogger<WeatherForecast>>();
     using var activity = ApiActivity.Source.StartActivity("weatherforecast");
-    ApiActivity.StartSelectWeatherforecast();
+    ApiActivity.StartSelectWeatherforecast(logger);
     var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
@@ -30,8 +31,8 @@ app.MapGet("/weatherforecast", () =>
             summaries[Random.Shared.Next(summaries.Length)]
         ))
         .ToArray();
-    ApiActivity.EndSelectWeatherforecast();
-    return forecast;
+    ApiActivity.EndSelectWeatherforecast(logger);
+    await ctx.Response.WriteAsJsonAsync(forecast);
 });
 
 app.MapDefaultEndpoints();

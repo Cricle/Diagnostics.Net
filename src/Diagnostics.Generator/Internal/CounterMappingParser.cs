@@ -1,7 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -16,15 +14,13 @@ namespace Diagnostics.Generator.Internal
             var visibility = GetVisiblity(symbol);
             node.GetWriteNameSpace(node.SemanticModel,out var nameSpaceStart, out var nameSpaceEnd);
 
-            var fullName = node.GetTypeFullName();
+            var fullName = node.TypeFullName;
             var className = symbol.Name;
-            var @namespace = node.GetNameSpace();
+            var @namespace = node.NameSpace;
             if (!string.IsNullOrEmpty(@namespace))
             {
                 @namespace = "global::" + @namespace;
             }
-            var nullableEnd = symbol.IsReferenceType && (nullableEnable & NullableContext.Enabled) != 0 ? "?" : string.Empty;
-            var ctxNullableEnd = (nullableEnable & NullableContext.Enabled) != 0 ? "?" : string.Empty;
 
             var fields = symbol.GetMembers()
                 .OfType<IFieldSymbol>()
@@ -68,18 +64,15 @@ namespace Diagnostics.Generator.Internal
             }
             var nullableDeclareStart = string.Empty;
             var nullableDeclareEnd = string.Empty;
-            if (!string.IsNullOrEmpty(ctxNullableEnd))
-            {
-                nullableDeclareStart = "#nullable enable";
-                nullableDeclareEnd = "#nullable restore";
-            }
+            nullableDeclareStart = "#nullable enable";
+            nullableDeclareEnd = "#nullable restore";
             var mapImpl = $@"
 #if NET8_0_OR_GREATER
 global::System.Collections.Frozen.FrozenDictionary.ToFrozenDictionary(
 #endif
 new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Action<{symbol.Name}, global::Diagnostics.Helpers.ICounterPayload>>
 {{
-    {string.Join("\n", fields.Select(x=>WriteWriteMethod(x,nullableEnd)))}
+    {string.Join("\n", fields.Select(WriteWriteMethod))}
 }}
 #if NET8_0_OR_GREATER
 )
@@ -270,7 +263,7 @@ yield return {builderName}.Build();
             return valueSetter.ContainsKey(name);
         }}
         
-        {string.Join("\n", fields.Select(x => WriteProperty(x, ctxNullableEnd, specialNames)))}
+        {string.Join("\n", fields.Select(x => WriteProperty(x, specialNames)))}
         
         public static global::System.Int32? SupportProviderCount => {supportProviderCount};
 
@@ -296,9 +289,9 @@ yield return {builderName}.Build();
 
         public void Reset()
         {{
-            {string.Join("\n", fields.Select(x=>WriteWriteNull(x,nullableEnd)))}
+            {string.Join("\n", fields.Select(x=>WriteWriteNull(x)))}
         }}
-        public event global::System.EventHandler{ctxNullableEnd} Changed;
+        public event global::System.EventHandler? Changed;
         
         public global::System.Boolean TryGetCounterPayload(global::System.String name, out global::Diagnostics.Helpers.ICounterPayload? payload)
         {{
@@ -494,19 +487,19 @@ global::System.Int32 {varName} = 0;
             }
             return map;
         }
-        private string WriteWriteNull(IFieldSymbol symbol,string nullableEnd)
+        private string WriteWriteNull(IFieldSymbol symbol)
         {
-            return $"global::System.Threading.Volatile.Write<global::Diagnostics.Helpers.ICounterPayload{nullableEnd}>(ref {symbol.Name},null);";
+            return $"global::System.Threading.Volatile.Write<global::Diagnostics.Helpers.ICounterPayload?>(ref {symbol.Name},null);";
         }
-        private string WriteProperty(IFieldSymbol symbol, string nullableEnd, IDictionary<string, string> specialNames)
+        private string WriteProperty(IFieldSymbol symbol, IDictionary<string, string> specialNames)
         {
-            return $"public global::Diagnostics.Helpers.ICounterPayload{nullableEnd} {specialNames[symbol.Name]} => global::System.Threading.Volatile.Read<global::Diagnostics.Helpers.ICounterPayload{nullableEnd}>(ref {symbol.Name});";
+            return $"public global::Diagnostics.Helpers.ICounterPayload? {specialNames[symbol.Name]} => global::System.Threading.Volatile.Read<global::Diagnostics.Helpers.ICounterPayload?>(ref {symbol.Name});";
         }
-        private string WriteWriteMethod(IFieldSymbol symbol,string nullableTail)
+        private string WriteWriteMethod(IFieldSymbol symbol)
         {
             var attr = symbol.GetAttribute(Consts.CounterItemAttribute.FullName);
             var eventName = attr!.GetByIndex<string>(0);
-            return $"[\"{eventName}\"] = (t,p)=>global::System.Threading.Volatile.Write<global::Diagnostics.Helpers.ICounterPayload{nullableTail}>(ref t.{symbol.Name},p),";
+            return $"[\"{eventName}\"] = (t,p)=>global::System.Threading.Volatile.Write<global::Diagnostics.Helpers.ICounterPayload?>(ref t.{symbol.Name},p),";
         }
         public static bool Predicate(SyntaxNode node, CancellationToken token)
         {

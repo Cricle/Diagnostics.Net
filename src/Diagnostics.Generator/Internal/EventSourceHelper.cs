@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -22,7 +21,7 @@ namespace Diagnostics.Generator.Internal
             var specialName = name.TrimStart('_');
             return char.ToUpper(specialName[0]) + specialName.Substring(1);
         }
-        public static bool TryWriteCode(SourceProductionContext context, SemanticModel model, INamedTypeSymbol symbol,INamedTypeSymbol originSymbol, bool logMode, IEnumerable<IMethodSymbol> methods, out string? outCode)
+        public static bool TryWriteCode(SourceProductionContext context, SemanticModel model, INamedTypeSymbol symbol, INamedTypeSymbol originSymbol, bool logMode, IEnumerable<IMethodSymbol> methods, out string? outCode)
         {
             var nullableEnable = symbol.GetNullableContext(model);
             var visibility = symbol.GetVisiblityString();
@@ -69,7 +68,7 @@ namespace Diagnostics.Generator.Internal
             var imports = new List<string>();
             var singletonExpression = string.Empty;
 
-            if (!logMode && (attr?.GetByNamed<bool>(Consts.EventSourceGenerateAttribute.GenerateSingleton)??false))
+            if (!logMode && (attr?.GetByNamed<bool>(Consts.EventSourceGenerateAttribute.GenerateSingleton) ?? false))
             {
                 //Check if not exists EventSourceAccesstorInstanceAttribute
                 var accesstorInstances = symbol.GetMembers()
@@ -145,8 +144,8 @@ namespace Diagnostics.Generator.Internal
                 var currentId = start;
                 var idSet = new HashSet<int>();
 
-                var buildIdMethods = methods.Where(x => !x.HasAttribute(Consts.MapToEventSourceGenerateIdIgnoreAttribute.FullName)&&x.HasAttribute(Consts.EventAttribute.FullName)).ToList();
-                if (buildIdMethods.Count!=0)
+                var buildIdMethods = methods.Where(x => !x.HasAttribute(Consts.MapToEventSourceGenerateIdIgnoreAttribute.FullName) && x.HasAttribute(Consts.EventAttribute.FullName)).ToList();
+                if (buildIdMethods.Count != 0)
                 {
                     foreach (var item in buildIdMethods)
                     {

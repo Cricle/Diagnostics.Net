@@ -20,7 +20,6 @@ namespace Diagnostics.Generator.Internal
             {
                 return;
             }
-            var nullableEnable = symbol.GetNullableContext(node.SemanticModel);
             var classHasUnsafe = HasKeyword(symbol, SyntaxKind.UnsafeKeyword);
             var unsafeKeyword = classHasUnsafe ? "unsafe" : string.Empty;
             var visibility = GetVisiblity(symbol);
@@ -99,7 +98,7 @@ namespace Diagnostics.Generator.Internal
             }
             var methodVisibility = GetVisiblity(method);
             var methodHead = $"{methodVisibility} {(method.IsStatic ? "static" : string.Empty)} partial void {method.Name}({string.Join(", ", method.Parameters.Select(x => x.ToString()))})";
-            var thisCode = type.IsStatic ? "global::"+method.ContainingType.ToString():"this";
+            var thisCode = type.IsStatic ? "global::" + method.ContainingType.ToString() : "this";
             var recordMethod = GetRecordMethod(meterTypes.Value);
             var codeBuilder = new StringBuilder(methodHead);
             codeBuilder.AppendLine("{");

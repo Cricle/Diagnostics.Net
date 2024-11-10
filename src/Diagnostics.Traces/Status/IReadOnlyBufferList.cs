@@ -1,6 +1,6 @@
 ﻿namespace Diagnostics.Traces.Status
 {
-    public interface IReadOnlyBufferList<T>:IDisposable
+    public interface IReadOnlyBufferList<T> : IDisposable
     {
         int Length { get; }
 

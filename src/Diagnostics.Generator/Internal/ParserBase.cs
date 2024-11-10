@@ -10,8 +10,8 @@ namespace Diagnostics.Generator.Internal
 {
     internal abstract class ParserBase
     {
-        public const string GlobalNs = "<global namespace>";
-        public const string GlobalNsKeyword = "<global";
+        private const string GlobalNs = "<global namespace>";
+        private const string GlobalNsKeyword = "<global";
 
         public static string GetSpecialName(string name)
         {
@@ -135,7 +135,7 @@ namespace Diagnostics.Generator.Internal
             end = endStr;
             return true;
         }
-        public static string GetTypeKindKeyword(TypeDeclarationSyntax typeDeclaration)
+        public static string? GetTypeKindKeyword(TypeDeclarationSyntax typeDeclaration)
         {
             switch (typeDeclaration.Kind())
             {

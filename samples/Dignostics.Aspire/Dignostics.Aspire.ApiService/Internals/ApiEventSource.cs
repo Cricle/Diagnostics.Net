@@ -1,5 +1,6 @@
 ﻿using Diagnostics.Generator.Core.Annotations;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Diagnostics.Tracing;
 
 namespace Dignostics.Aspire.ApiService.Internals
@@ -7,7 +8,7 @@ namespace Dignostics.Aspire.ApiService.Internals
     [EventSourceGenerate(GenerateSingleton = true)]
     internal partial class ApiEventSource:EventSource
     {
-        public const string EventName = "Dignostics.Api";
+        public const string EventName = "dignostics.api";
 
     }
 

@@ -229,15 +229,17 @@ if({eventSource}.IsEnabled())
 
                 withLogCode = $@"
 {activityMapToEventAttr}
-{visibility} {staticKeyword} {method.ReturnType} {method.Name}(global::Microsoft.Extensions.Logging.ILogger logger,{noActivityArgs})
+{visibility} {staticKeyword} {method.ReturnType} {method.Name}(global::Microsoft.Extensions.Logging.ILogger? logger,{noActivityArgs})
 {{
-    {invokeLog}
+    if(logger!=null)
+        {invokeLog}
     {method.Name}(global::System.Diagnostics.Activity.Current,{invokeCodesNoConvert});
 }}
 {activityMapToEventAttr}
-{visibility} {staticKeyword} {method.ReturnType} {method.Name}(global::Microsoft.Extensions.Logging.ILogger logger,{argCode})
+{visibility} {staticKeyword} {method.ReturnType} {method.Name}(global::Microsoft.Extensions.Logging.ILogger? logger,{argCode})
 {{
-    {invokeLog}
+    if(logger!=null)
+        {invokeLog}
     {method.Name}(activity,{invokeCodesNoConvert});
 }}
 ";

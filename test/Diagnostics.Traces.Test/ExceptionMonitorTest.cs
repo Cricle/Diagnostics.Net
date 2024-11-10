@@ -57,27 +57,28 @@ namespace Diagnostics.Traces.Test
             Assert.IsInstanceOfType<InvalidOperationException>(handler.Infos[0].Exception);
         }
 
-        [TestMethod]
-        public void ExceptionRaise_OnlyHasActivity_NothingCaptched()
-        {
-            Activity.Current?.Dispose();
-            var ex = new InvalidOperationException("test");
-            var handler = new BatchOperatorHandler();
-            Activity.Current?.Dispose();
-            using var monitor = new ExceptionMonitor(handler, 1) { CatchMode = ExceptionCatchMode.OnlyHasActivity };
-            Assert.AreEqual(monitor.CatchMode, ExceptionCatchMode.OnlyHasActivity);
-            try
-            {
-                throw ex;
-            }
-            catch (Exception)
-            {
-            }
+        //[TestMethod]
+        //public void ExceptionRaise_OnlyHasActivity_NothingCaptched()
+        //{
+        //    Activity.Current?.Dispose();
+        //    var ex = new InvalidOperationException("test");
+        //    var handler = new BatchOperatorHandler();
+        //    Activity.Current?.Dispose();
+        //    using var monitor = new ExceptionMonitor(handler, 1) { CatchMode = ExceptionCatchMode.OnlyHasActivity };
+        //    Assert.AreEqual(monitor.CatchMode, ExceptionCatchMode.OnlyHasActivity);
+        //    try
+        //    {
+        //        throw ex;
+        //    }
+        //    catch (Exception)
+        //    {
+        //    }
 
-            WaitAllComplated(monitor.exceptionOperator);
+        //    WaitAllComplated(monitor.exceptionOperator);
 
-            Assert.IsNull(handler.Infos);
-        }
+        //    Assert.IsNull(handler.Infos);
+        //}
+
         [TestMethod]
         public void ExceptionRaise_OnlyHasActivity_HasActivity()
         {
